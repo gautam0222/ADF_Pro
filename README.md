@@ -257,29 +257,6 @@ Routing behavior:
 
 ## Schema Mapping Flow
 
-Pipeline: `schema`
-
-This pipeline reads files from `source/files`, loops through each file, and applies a different tabular translator based on file name.
-
-```mermaid
-flowchart TD
-    Start([Start])
-    Metadata[Get Metadata<br/>List source/files]
-    Loop[ForEachFile]
-    Choose{item().name}
-    CustomerSchema[customers_schema]
-    DriverSchema[drivers_schema]
-    TripsSchema[trips_schema]
-    Copy[Copy DataLoad<br/>to sink/schema]
-    End([End])
-
-    Start --> Metadata --> Loop --> Choose
-    Choose -- customers.csv --> CustomerSchema --> Copy
-    Choose -- drivers.csv --> DriverSchema --> Copy
-    Choose -- other/trips --> TripsSchema --> Copy
-    Copy --> End
-```
-
 Schema mappings included:
 
 - Customer fields such as `customer_id`, `first_name`, `last_name`, `email`, `phone_number`, `city`, `signup_date`, and `last_updated_timestamp`.
@@ -321,17 +298,6 @@ Pipeline: `DeltaLake`
 Data flow: `dataflow`
 
 The `DeltaLake` pipeline executes a mapping data flow using 8 general compute cores.
-
-```mermaid
-flowchart TD
-    Source[Source CSV<br/>source/DeltaSource/locations.csv]
-    Upper[Derived Column<br/>state = upper(state)]
-    Select[Select columns<br/>location_id, city, state, country, last_updated_timestamp]
-    Alter[Alter Row<br/>upsertIf(1 == 1)]
-    DeltaSink[Delta sink<br/>sink/schema<br/>key: location_id]
-
-    Source --> Upper --> Select --> Alter --> DeltaSink
-```
 
 The data flow reads location data with this source shape:
 
