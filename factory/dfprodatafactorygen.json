@@ -1,0 +1,15 @@
+{
+	"name": "dfprodatafactorygen",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "32ee77cc-2ec3-4b02-87d9-68668320aafb",
+		"tenantId": "82ae7878-9cde-4ea3-bfc5-47211bb29196"
+	}
+}
